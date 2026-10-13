@@ -335,7 +335,7 @@ Run on 2026-10-12 against the working database, after `POST /reset`. Full detail
 |---|---|---|---|
 | 101 Bulldog tee | `resolved`: 1 tee incoming on a paid PO, expected 2026-09-05; customer draft saved | #1 invoice 501 $840 (Store manager); #3 PO 1 × CC-TEE-WHITE S $8 (Store Manager, in the dashboard) | −$848.00 |
 | 102 Rent due | `resolved`: September 2 rent paid; next due 2026-10-02 | #2 rent lease 1 $2,400 (Store manager) | −$2,400.00 |
-| 103 Bulk hoodies | `needs_human`: the club named no discount, which is a human decision; clarification draft saved | none | $0.00 |
+| 103 Bulk hoodies | `resolved` on run 4: the Store Manager recorded a 10% discount ($52.20/unit) and the team saved an offer draft | none (a discount isn't a payment; human decision recorded on the dashboard) | $0.00 |
 
 **Checking:** $3,400.00 → $1,000.00 (rent) → $160.00 (invoice 501) → **$152.00** (PO). That matches `cash_accounts` in the working database.
 

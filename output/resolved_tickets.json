@@ -79,26 +79,30 @@
       "type": "price_override",
       "requester": "Yale AI Club",
       "subject": "Bulk hoodie discount (20 x CC-HOOD-NAVY, size M)",
-      "final_status": "needs_human",
+      "final_status": "resolved",
       "board_state": "resolved",
-      "resolved_run_id": "dd8581ef5eb3",
+      "resolved_run_id": "ad0c69b3fb28",
       "runs": [
         { "run_id": "b486f31e5d4f", "status": "needs_human", "note": "Discount unspecified; 8 of 20 on hand; vendor blocked by invoice 501 (approval pending)." },
         { "run_id": "7b4899d75855", "status": "needs_human", "note": "Vendor unblocked after invoice 501 was paid; discount still unspecified." },
-        { "run_id": "dd8581ef5eb3", "status": "needs_human", "note": "Final run on final cash: margins at 10% and 20% shown; clarification draft saved." }
+        { "run_id": "dd8581ef5eb3", "status": "needs_human", "note": "Run on final cash: margins at 0%, 10%, and 20% shown; clarification draft saved." },
+        { "run_id": "ad0c69b3fb28", "status": "resolved", "note": "After the human recorded 10% off ($52.20/unit), the team confirmed it is above cost and saved restock recommendation draft 19 and offer draft 20. 11 tool calls, 4 delegations." }
       ],
-      "short_outcome": "The team finished: 8 of 20 hoodies on hand (short 12), margin is $36 per unit ($720 on 20 at list), and selling below cost starts past a 62.07% discount. The club never named a discount, so whether to grant one is left to a human. C-3PO's draft asks them for a target. No discount was promised and no money moved.",
+      "short_outcome": "Resolved on the 4th run after the Store Manager recorded a 10% discount. 8 of 20 hoodies on hand (short 12). At $52.20/unit, 20 hoodies bring $1,044 revenue and $604 margin ($116 less than $720 at list), above the $22 cost. C-3PO's draft 20 offers the 10% price and promises no delivery date. No money moved.",
       "agents": {
-        "boss (Darth Vader)": "Classified it as a price override, routed stock to inventory and margins to accounting, and sent it to a human because a discount is a human decision and the requested amount is unknown.",
-        "inventory (R2-D2)": "check_stock showed 8 on hand, short 12. check_vendor_status showed Bulldog Print Co (blocked on the first run, able to ship after invoice 501 was paid), earliest arrival 2026-09-05 if ordered. No order placed.",
-        "accounting (Lando Calrissian)": "check_discount at 0%, 10%, and 20% off. List: $58 price, $22 cost, $36/unit, $720 total margin. 10% off: $604 margin. 20% off: $488 margin. Break-even at a 62.07% discount. Granted nothing.",
+        "boss (Darth Vader)": "Classified it as a price override, routed stock to inventory and margins to accounting, and sent it to a human because a discount is a human decision. In run 4 it read the recorded decision with get_ticket, passed it to the team exactly, and resolved the ticket.",
+        "inventory (R2-D2)": "check_stock showed 8 on hand, short 12. check_vendor_status showed Bulldog Print Co (blocked on the first run, able to ship after invoice 501 was paid), earliest arrival 2026-09-05 if ordered. In run 4 it saved restock recommendation draft 19 (12 x $22, needs human approval). No order placed.",
+        "accounting (Lando Calrissian)": "check_discount at 0%, 10%, and 20% off. List: $58 price, $22 cost, $36/unit, $720 total margin. 10% off: $604 margin. 20% off: $488 margin. Break-even at a 62.07% discount. In run 4 it confirmed the human's 10% ($52.20/unit, $1,044 revenue, $604 margin). Granted nothing on its own.",
         "facilities (Chewbacca)": "Not involved.",
-        "customer_service (C-3PO)": "Saved drafts 4, 9, and 16 (never sent). The final draft says 8 of 20 are available, gives the $58 list price, asks what discount or target price they want, and promises no discount or date."
+        "customer_service (C-3PO)": "Saved drafts 4, 9, 16, and 20 (never sent). Final draft 20 offers 10% off at $52.20 each, says 8 of 20 can ship now and 12 depend on a restock, and promises no delivery date."
       },
-      "tools_used": ["get_ticket", "check_stock", "check_vendor_status", "check_discount", "check_invoice", "check_cash", "list_board", "save_draft"],
+      "tools_used": ["get_ticket", "check_stock", "check_vendor_status", "check_discount", "check_invoice", "check_cash", "list_board", "save_draft", "record_human_decision (human, dashboard)"],
+      "human_decisions": [
+        { "id": 1, "decision": "offer_discount", "discount_pct": 10.0, "unit_price": 52.2, "qty": 20, "decided_by": "Store Manager", "created_at": "2026-10-12T11:06:23" }
+      ],
       "human_approvals": [],
       "cash_change": 0.0,
-      "open_for_human": "Decide the discount once the club names one (stay above $22/unit cost). Restocking 12 more would cost 12 x $22 = $264, which is more than the $152 left in checking, so it can't be bought now."
+      "open_for_human": "Restocking the other 12 would cost 12 x $22 = $264, which is more than the $152 left in checking, so it can't be bought now."
     }
   ]
 }

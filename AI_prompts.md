@@ -12,7 +12,7 @@ A log of the prompts I typed to the AI assistant, one section per problem.
 
 **Follow-up prompts:**
 
-_None yet._
+_None needed._
 
 ---
 
@@ -51,7 +51,7 @@ _(This prompt was first sent, interrupted, and then re-sent in full; the complet
 
 **Follow-up prompts:**
 
-_None yet._
+_None needed._
 
 ---
 
@@ -70,6 +70,8 @@ _None yet._
 
 > 2 sentences is fine
 
+*What was lacking:* The first prompt didn't say how long each tool's "why" line in harness.md should be.
+
 ---
 
 ## Problem 4: Add the MCP server to Vibe Coder and test each tool
@@ -82,20 +84,36 @@ _None yet._
 
 > I will now test each tool. Save the prompt I gave you, the tool name, and tool output which must match values in data/campus_customs_new.db. Record this in output/mcp_smoke.json when I start
 
+*What was lacking:* The first prompt only asked how to test the tools; it didn't say to record each test or where to save the results.
+
 > we will now test the mcp server as a continuation of problem 4
 > Through the campus-customs MCP server, call check_stock for CC-TEE-WHITE size S, quantity 1
 
+*What was lacking:* The first prompt didn't include the actual test calls, so this is test 1 of the 6 I ran myself.
+
 > Through the campus-customs MCP server, call check_stock for CC-HOOD-NAVY size M, quantity 20
+
+*What was lacking:* The first prompt didn't include the test calls, so this is test 2, covering the ticket 103 hoodie shortfall.
 
 > Through the campus-customs MCP server, call check_vendor_status for vendor 1
 
+*What was lacking:* The first prompt didn't include the test calls, so this is test 3, covering the vendor blocked by invoice 501.
+
 > Through the campus-customs MCP server, call check_vendor_status with no vendor ID
+
+*What was lacking:* The first prompt didn't include the test calls, so this is test 4, checking the tool works without an ID.
 
 > Through the campus-customs MCP server, call check_rent_due for lease 1
 
+*What was lacking:* The first prompt didn't include the test calls, so this is test 5, covering the ticket 102 rent.
+
 > Through the campus-customs MCP server, call check_stock for CC-HOOD-NAVY size XXL
 
+*What was lacking:* The first prompt didn't include the test calls, so this is test 6, checking that a size that doesn't exist is reported instead of invented.
+
 > All 6 MCP tool tests passed. Log my test prompts as follow-up prompts under Problem 4 in AI_prompts.md, and add a short “Testing” section to mcp_server/README.md listing the 6 test calls and their results. Along with the format i specified before
+
+*What was lacking:* The first prompt didn't ask for the test prompts to be logged or for a Testing section in the MCP README.
 
 ---
 
@@ -123,9 +141,15 @@ _None yet._
 
 > Make sure to add any tools the agents need to mcp server so they can work on open tiockets. shop facts come from the mcp server over data/campus_customs_new.db never invent a scond shop tools layer that bypasses mcp. Wire the agents the they append to output/audit_trail.json as they run for each agent loop step, make sure to record enough to audit latter. Always add to the file do not wipe it. In output/harness.md list each agent and each MCP tool including ones added now along with which table the tool uses. Also add a short safety section whcih includes guardrails a real business would want when agents touch customers and real money, and limits to keep token use in check. Update mcp_server/README.md so the tool list matches. ALSO remember, this is to be all done here, Nver contact anyone or place any orders it is a mock assignment
 
+*What was lacking:* The first prompt built the agents but didn't cover adding the MCP tools they need, writing the audit trail, documenting agents and tools in harness.md, or the safety section.
+
 > where are the tickets stored
 
+*What was lacking:* The first prompt didn't explain where the tickets live, which I needed to follow the agents' work.
+
 > what is each ticket
+
+*What was lacking:* The first prompt didn't describe what the three open tickets actually ask for.
 
 ---
 
@@ -144,17 +168,23 @@ _None yet._
 >
 > Tools I expect to be used: check_stock, check_vendor_status, the cash and payment-approval tools, the pay tool, and the draft tool.
 
+*What was lacking:* The first prompt only built the page; it didn't include my own expected plan for ticket 101.
+
 > For Ticket 102: Rent
 >
 > This ticket goes to the Facilities agent first because it’s about the lease. The facilities agent should confirm that we owe Elm City Properties $2,400 for rent, due in two days Therefore, it isn’t late yet. The agent then passes that to the Accounting agent, which checks cash reserves and asks a human to approve the payment. After human approval, the rent gets paid and the tables update with an outflow of cash. Inventory and Customer Service agents will not be involved as they have nothing to do here, due to this not being a customer message.
 >
 > Tools I expect to be used: check_rent_due, the cash and payment-approval tools, and the pay tool.
 
+*What was lacking:* The first prompt didn't include my expected plan for ticket 102.
+
 > For Ticket 103: Yale AI Club hoodies
 >
 > The Inventory agent gets delegated first again. Before determining price, we need to know how many units we can actually deliver. The agent should find only 8 of the 20 in stock, and restocking the other 12 runs through the same blocked vendor as ticket 101. The accounting agent then looks at the discount. Each hoodie costs us $22 and sells for $58, so any discount has to stay above the cost of $22. Restocking 12 items would cost $264. The discount is a human decision, so the Boss should flag it for approval rather than decide it alone. The human would then decide if to have a discount and the amount of discount. The Customer Service agent then drafts a reply saying 8 are ready now and the rest depend on a restock, without promising a price yet. Facilities agenty isn’t needed for this ticket.
 >
 > Tools I expect to be used: check_stock, check_vendor_status, the cash tools, and the draft tool.
+
+*What was lacking:* The first prompt didn't include my expected plan for ticket 103.
 
 ---
 
@@ -176,7 +206,7 @@ _None yet._
 
 **Follow-up prompts:**
 
-_None yet._
+_None needed._
 
 ---
 
@@ -191,7 +221,7 @@ _None yet._
 
 **Follow-up prompts:**
 
-_None yet._
+_None needed._
 
 ---
 
@@ -216,11 +246,19 @@ _None yet._
 
 > (Answers to approval questions) Approve #1 Invoice 501 — $840 and #2 Rent — $2,400; sign as "Store manager"; for any new requests after re-running: "Ask me again".
 
+*What was lacking:* The first prompt couldn't approve payments in advance, because every payment needs a human decision when it is requested.
+
 > (Answer) Approve request #3, PO for 1 CC-TEE-WHITE size S, $8.00, as "Store manager".
+
+*What was lacking:* The $8 restock order only appeared after invoice 501 was paid, so it needed its own approval.
 
 > how do i decide the discount. I dont see anywhere on the webpage
 
+*What was lacking:* The first prompt didn't give me a way to record a discount decision on the dashboard, so ticket 103 couldn't move past needs_human.
+
 > Build it to have options of discounts with some info about how they would impact profitability. ex how much the rev-discount price would be
+
+*What was lacking:* The dashboard had no discount options or profitability numbers to decide from.
 
 ---
 
@@ -234,7 +272,7 @@ _None yet._
 
 **Follow-up prompts:**
 
-_None yet._
+_None needed._
 
 ---
 
@@ -250,13 +288,25 @@ _None yet._
 
 > do not push to github yet but when you do, dont include data.zip
 
+*What was lacking:* The first prompt didn't say when to push or that data.zip should stay out of the repo.
+
 > (Screenshot of the required hw5/ layout: AI_prompts.md, requirements.txt, .env.example, .gitignore, .mcp.json, README.md, data/{campus_customs.db, campus_customs_new.db}, mcp_server/{server.py, README.md}, frontend/, backend/{main.py, models.py, prompts/{boss, inventory, accounting, facilities, customer_service}.md}, output/{harness.md, mcp_smoke.json, desk_tickets.html, design.md, resolved_tickets.json, resolved_board.html, audit_trail.json, github_url.txt})
 > Initialize git if needed, stage everything, and show me git status so I can check the file list against the required layout before committing. Then make the first commit.
 > Stop there and ask me for the GitHub repo URL. Do not push until I give it to you. After I do, push to main and save the URL in output/github_url.txt, then commit and push that file too.
 > Log this prompt and any follow-ups under Problem 11 in AI_prompts.md.
 > Also check that structure is correct
 
+*What was lacking:* The first prompt didn't cover setting up git, checking the files against the required layout, or the push steps.
+
 > Ensure that only the specified files are pushed. Files should only be in Homework 5 folder of MGT 409 folder. Also ensure that no real secrets are pushed
 > https://github.com/Rsofman/mgt409-hw5.git
 
+*What was lacking:* The previous prompt didn't give the repo URL or say to keep files to the Homework 5 folder and check for secrets.
+
 > (Answer) Keep needed files: push the layout plus the backend files the app needs to run; drop only .gitkeep.
+
+*What was lacking:* The required layout left out backend files the app needs to run, so I had to decide what to push.
+
+> Lets fix a few things before repushing. Ticket 103 was resolved on the 4th run afyer i recorded a 10% discount. Update the ticket 103 actual section in desk tickets html. and tcket 103 row in cash tab and in resolved tickjets json so they match working db. In Ai_prompts.md under each follow up prompt, add one sentence on what was lacking after the first prompt. Replace none yet with none needed and log under problem 11. In reflection tab add short references in parentheses that point to ticket and cash tabs. Do not change wording otherwise. Commit and repush to https://github.com/Rsofman/mgt409-hw5
+
+*What was lacking:* The records stopped at run 3 for ticket 103 even though it resolved on run 4, and this log didn't say why each follow-up was needed.
