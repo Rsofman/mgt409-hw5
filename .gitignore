@@ -1,0 +1,20 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# Frontend
+node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
+
+# Not part of the repo (data/campus_customs.db is the original copy)
+data.zip
+.gitkeep

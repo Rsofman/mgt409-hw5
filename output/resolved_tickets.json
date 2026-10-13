@@ -1,0 +1,104 @@
+{
+  "run_date": "2026-10-12",
+  "shop_date": "2026-08-31",
+  "model": "gpt-6-luna (all agents)",
+  "database": "data/campus_customs_new.db (reset from data/campus_customs.db before the run)",
+  "audit_trail": "output/audit_trail.json",
+  "cash": {
+    "account": "checking",
+    "starting_balance_after_reset": 3400.0,
+    "payments": [
+      { "payment_id": 1, "ticket_id": 102, "kind": "rent", "payee": "Elm City Properties", "amount": 2400.0, "balance_after": 1000.0 },
+      { "payment_id": 2, "ticket_id": 101, "kind": "invoice", "payee": "Bulldog Print Co", "amount": 840.0, "balance_after": 160.0 },
+      { "payment_id": 3, "ticket_id": 101, "kind": "purchase_order", "payee": "Bulldog Print Co", "amount": 8.0, "balance_after": 152.0 }
+    ],
+    "total_paid": 3248.0,
+    "ending_balance": 152.0,
+    "ending_balance_in_cash_accounts": 152.0,
+    "check": "3400.00 - 2400.00 - 840.00 - 8.00 = 152.00"
+  },
+  "tickets": [
+    {
+      "id": 101,
+      "type": "customer_order",
+      "requester": "Tauhid Zaman",
+      "subject": "Bulldog tee (1 x CC-TEE-WHITE, size S)",
+      "final_status": "resolved",
+      "board_state": "resolved",
+      "resolved_run_id": "24acf5834827",
+      "runs": [
+        { "run_id": "3440977323fb", "status": "awaiting_approval", "note": "Size S out of stock; vendor blocked by invoice 501; approval #1 ($840) requested." },
+        { "run_id": "2e80344b4117", "status": "awaiting_approval", "note": "After invoice 501 was paid, approval #3 requested: PO for 1 tee, $8." },
+        { "run_id": "06a6593b2bc7", "status": "needs_human", "note": "PO was paid but check_stock did not yet show incoming stock, so the boss escalated. Tool fixed to show paid POs as incoming." },
+        { "run_id": "24acf5834827", "status": "resolved", "note": "Paid PO covers the shortfall; expected arrival 2026-09-05; updated customer draft saved." }
+      ],
+      "short_outcome": "Size S was out of stock and the only apparel vendor was blocked by unpaid invoice 501. A human paid the invoice ($840) and a 1-unit restock PO ($8). One tee is incoming with expected arrival 2026-09-05, and the customer reply is saved as a draft (not sent).",
+      "agents": {
+        "boss (Darth Vader)": "Classified it as a customer order, sent stock checks to inventory and the invoice question to accounting, recommended paying invoice 501, then the $8 PO, and resolved the ticket once the paid PO covered the shortfall.",
+        "inventory (R2-D2)": "check_stock showed 0 on hand (short 1). check_vendor_status found Bulldog Print Co blocked by invoice 501 and handed that to accounting. After payment, reported 1 unit incoming from the paid PO, arriving 2026-09-05.",
+        "accounting (Lando Calrissian)": "Verified invoice 501 with check_invoice and check_cash and requested approval #1 ($840). After it was paid, requested approval #3 for the $8 PO. Refused to create duplicate requests.",
+        "facilities (Chewbacca)": "Not involved.",
+        "customer_service (C-3PO)": "Saved customer drafts 1, 7, 12, and 14 (never sent). The final draft says size S is out of stock and a restock is expected September 5, not guaranteed."
+      },
+      "tools_used": ["get_ticket", "check_stock", "check_vendor_status", "check_invoice", "check_cash", "request_payment_approval", "get_approval", "list_board", "save_draft"],
+      "human_approvals": [
+        { "approval_id": 1, "kind": "invoice", "ref": "invoice 501", "payee": "Bulldog Print Co", "amount": 840.0, "approved_by": "Store manager", "decided_at": "2026-10-12T10:38:28", "result": "paid, payment 2" },
+        { "approval_id": 3, "kind": "purchase_order", "ref": "1 x CC-TEE-WHITE size S", "payee": "Bulldog Print Co", "amount": 8.0, "approved_by": "Store Manager (signed in the React dashboard)", "decided_at": "2026-10-12T10:42:24", "result": "paid, payment 3" }
+      ],
+      "cash_change": -848.0
+    },
+    {
+      "id": 102,
+      "type": "rent_notice",
+      "requester": "Elm City Properties",
+      "subject": "Rent due (lease 1)",
+      "final_status": "resolved",
+      "board_state": "resolved",
+      "resolved_run_id": "c20e27fddd4f",
+      "runs": [
+        { "run_id": "9cdbc616a605", "status": "awaiting_approval", "note": "$2,400 rent due 2026-09-02 (2 days, upcoming); approval #2 requested." },
+        { "run_id": "f78faf5f1ea2", "status": "needs_human", "note": "After payment, check_rent_due showed only the new due date, so the boss flagged a date conflict. Tool fixed to show rent payments on file." },
+        { "run_id": "c20e27fddd4f", "status": "resolved", "note": "September 2 rent is paid (payment 1); next due 2026-10-02." }
+      ],
+      "short_outcome": "Rent of $2,400 to Elm City Properties, due 2026-09-02, was paid after human approval. The lease's next due date moved to 2026-10-02. No message was sent to the landlord.",
+      "agents": {
+        "boss (Darth Vader)": "Classified it as a rent notice, routed it to facilities, recommended paying rent first, and resolved the ticket once the payment was on file.",
+        "inventory (R2-D2)": "Not involved.",
+        "accounting (Lando Calrissian)": "Re-checked the rent with check_rent_due and check_cash and requested approval #2 for the full $2,400. Did not pay before approval.",
+        "facilities (Chewbacca)": "check_rent_due showed $2,400, payee Elm City Properties, due 2026-09-02, upcoming in 2 days, and handed it to accounting. On the final run, confirmed payment 1 covered the September 2 due date.",
+        "customer_service (C-3PO)": "Not involved; agents never contact the landlord."
+      },
+      "tools_used": ["get_ticket", "check_rent_due", "check_cash", "request_payment_approval", "list_approvals", "list_board"],
+      "human_approvals": [
+        { "approval_id": 2, "kind": "rent", "ref": "lease 1", "payee": "Elm City Properties", "amount": 2400.0, "approved_by": "Store manager", "decided_at": "2026-10-12T10:38:27", "result": "paid, payment 1" }
+      ],
+      "cash_change": -2400.0
+    },
+    {
+      "id": 103,
+      "type": "price_override",
+      "requester": "Yale AI Club",
+      "subject": "Bulk hoodie discount (20 x CC-HOOD-NAVY, size M)",
+      "final_status": "needs_human",
+      "board_state": "resolved",
+      "resolved_run_id": "dd8581ef5eb3",
+      "runs": [
+        { "run_id": "b486f31e5d4f", "status": "needs_human", "note": "Discount unspecified; 8 of 20 on hand; vendor blocked by invoice 501 (approval pending)." },
+        { "run_id": "7b4899d75855", "status": "needs_human", "note": "Vendor unblocked after invoice 501 was paid; discount still unspecified." },
+        { "run_id": "dd8581ef5eb3", "status": "needs_human", "note": "Final run on final cash: margins at 10% and 20% shown; clarification draft saved." }
+      ],
+      "short_outcome": "The team finished: 8 of 20 hoodies on hand (short 12), margin is $36 per unit ($720 on 20 at list), and selling below cost starts past a 62.07% discount. The club never named a discount, so whether to grant one is left to a human. C-3PO's draft asks them for a target. No discount was promised and no money moved.",
+      "agents": {
+        "boss (Darth Vader)": "Classified it as a price override, routed stock to inventory and margins to accounting, and sent it to a human because a discount is a human decision and the requested amount is unknown.",
+        "inventory (R2-D2)": "check_stock showed 8 on hand, short 12. check_vendor_status showed Bulldog Print Co (blocked on the first run, able to ship after invoice 501 was paid), earliest arrival 2026-09-05 if ordered. No order placed.",
+        "accounting (Lando Calrissian)": "check_discount at 0%, 10%, and 20% off. List: $58 price, $22 cost, $36/unit, $720 total margin. 10% off: $604 margin. 20% off: $488 margin. Break-even at a 62.07% discount. Granted nothing.",
+        "facilities (Chewbacca)": "Not involved.",
+        "customer_service (C-3PO)": "Saved drafts 4, 9, and 16 (never sent). The final draft says 8 of 20 are available, gives the $58 list price, asks what discount or target price they want, and promises no discount or date."
+      },
+      "tools_used": ["get_ticket", "check_stock", "check_vendor_status", "check_discount", "check_invoice", "check_cash", "list_board", "save_draft"],
+      "human_approvals": [],
+      "cash_change": 0.0,
+      "open_for_human": "Decide the discount once the club names one (stay above $22/unit cost). Restocking 12 more would cost 12 x $22 = $264, which is more than the $152 left in checking, so it can't be bought now."
+    }
+  ]
+}
